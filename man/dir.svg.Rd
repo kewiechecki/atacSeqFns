@@ -12,7 +12,7 @@ dir.svg(filename, path = ".", ..., append.date = T)
 
 \item{path}{The path to the output file.}
 
-\item{...}{Additional arguments to svg.}
+\item{...}{Additional arguments to \code{svg}.}
 
 \item{append.date}{Whether to write the output to a directory with today's date.}
 }

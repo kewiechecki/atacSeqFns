@@ -19,16 +19,16 @@ mkdate <- function(filename,ext,path='.',append.date=T){
   return(filename)
 }
 
-#' Concatenates a path, filename, and file extension into an output path, then writes data x to the output path using function fn.
+#' Concatenates a path, filename, and file extension into an output path, then writes data \code{x} to the output path using function \code{fn}.
 #' Any folders in the path that do not exist are created.
 #' @param x Data to be written to filename.
 #' @param fn Function that accepts x as its first argument and a file path as its second argument.
 #' @param filename The output file name.
 #' @param ext The file extension.
 #' @param path The path to the output file.
-#' @param ... Additional arguments to fn.
+#' @param ... Additional arguments to \code{fn}.
 #' @param append.date Whether to write the output to a directory with today's date.
-#' @return The resulting value of fn.
+#' @return The resulting value of \code{fn}.
 #' @examples
 #' dir.out(iris, write.table,"example","txt",path="path/to")
 dir.out <- function(x,fn,filename,ext='txt',path='.',...,append.date=T){
@@ -36,15 +36,15 @@ dir.out <- function(x,fn,filename,ext='txt',path='.',...,append.date=T){
   fn(x,filename,...)
 }
 
-#' Concatenates a path, filename, and file extension into an output path, then opens a connection to the output path using function fn.
+#' Concatenates a path, filename, and file extension into an output path, then opens a connection to the output path using function \code{fn}.
 #' Any folders in the path that do not exist are created.
 #' @param filename The output file name.
 #' @param fn Function that accepts x as its first argument and a file path as its second argument.
 #' @param ext The file extension.
 #' @param path The path to the output file.
-#' @param ... Additional arguments to fn.
+#' @param ... Additional arguments to \code{fn}.
 #' @param append.date Whether to write the output to a directory with today's date.
-#' @return The resulting value of fn.
+#' @return The resulting value of \code{fn}.
 #' @examples
 #' dir.img(pdf,"example","pdf",path="path/to")
 #' plot(1:5,1:5)
@@ -54,13 +54,13 @@ dir.img <- function(filename, fn,ext, path = '.', ...,append.date=T){
   fn(filename, ...)
 }
 
-#' Concatenates a path, filename, and file extension into an output path, then writes data x to the output path as a tab-separated file.
+#' Concatenates a path, filename, and file extension into an output path, then writes data \code{x} to the output path as a tab-separated file.
 #' Any folders in the path that do not exist are created.
-#' @param x Data to be written to filename.
+#' @param x Data to be written to \code{filename}.
 #' @param filename The output file name.
 #' @param ext The file extension.
 #' @param path The path to the output file.
-#' @param ... Additional arguments to write.table.
+#' @param ... Additional arguments to \code{write.table}.
 #' @param append.date Whether to write the output to a directory with today's date.
 #' @seealso \code{\link{dir.out}}, \code{\link{utils::write.table}}
 #' @examples
@@ -69,12 +69,12 @@ dir.tab <- function(x,filename, path = '.',ext='txt',quote=F,...,append.date=T){
   dir.out(x,write.table,filename,ext,path,sep='\t', quote=quote,...,append.date=append.date)
 }
 
-#' Concatenates a path, filename, and file extension into an output path, then writes data x to the output path as a csv.
+#' Concatenates a path, filename, and file extension into an output path, then writes data \code{x} to the output path as a csv.
 #' Any folders in the path that do not exist are created.
-#' @param x Data to be written to filename.
+#' @param x Data to be written to \code{filename}.
 #' @param filename The output file name.
 #' @param path The path to the output file.
-#' @param ... Additional arguments to write.csv.
+#' @param ... Additional arguments to \code{write.csv}.
 #' @param append.date Whether to write the output to a directory with today's date.
 #' @seealso \code{\link{dir.out}}, \code{\link{utils::write.csv}}
 #' @examples
@@ -83,13 +83,13 @@ dir.csv <- function(x,filename, path = '.', summary=F,quote=T,...,append.date=T)
   dir.out(x,write.csv,filename,'csv',path,quote=quote,...,append.date=append.date)
 }
 
-#' Concatenates a path, filename, and file extension into an output path, then exports data x to the output path in a specified format.
+#' Concatenates a path, filename, and file extension into an output path, then exports data \code{x} to the output path in a specified format.
 #' Any folders in the path that do not exist are created.
-#' @param x Data to be written to filename.
+#' @param x Data to be written to \code{filename}.
 #' @param filename The output file name.
 #' @param path The path to the output file.
-#' @param format An appropriate format for rtracklayer::export.
-#' @param ... Additional arguments to rtracklayer::export. 
+#' @param format An appropriate format for \code{rtracklayer::export}.
+#' @param ... Additional arguments to \code{rtracklayer::export}. 
 #' @param append.date Whether to write the output to a directory with today's date.
 #' @seealso \code{\link{dir.out}}, \code{\link{rtracklayer::export}}
 #' @examples
@@ -105,7 +105,7 @@ dir.export <- function(x,filename,path='.',format='bed',...,append.date=T){
 #' @param res The nominal resolution in ppi.
 #' @param width The width of the device.
 #' @param height The height of the device.
-#' @param ... Additional arguments to png. 
+#' @param ... Additional arguments to \code{png}. 
 #' @param append.date Whether to write the output to a directory with today's date.
 #' @seealso \code{\link{dir.img}}, \code{\link{grDevices::png}}
 #' @examples
@@ -120,7 +120,7 @@ dir.png <- function(filename, path = '.', ...,append.date=T) dir.img(
 #' Any folders in the path that do not exist are created.
 #' @param filename The output file name.
 #' @param path The path to the output file.
-#' @param ... Additional arguments to pdf. 
+#' @param ... Additional arguments to \code{pdf}. 
 #' @param append.date Whether to write the output to a directory with today's date.
 #' @seealso \code{\link{dir.img}}, \code{\link{grDevices::pdf}}
 #' @examples
@@ -135,7 +135,7 @@ dir.pdf <- function(filename, path = '.', ...,append.date=T) dir.img(
 #' Any folders in the path that do not exist are created.
 #' @param filename The output file name.
 #' @param path The path to the output file.
-#' @param ... Additional arguments to svg. 
+#' @param ... Additional arguments to \code{svg}. 
 #' @param append.date Whether to write the output to a directory with today's date.
 #' @seealso \code{\link{dir.img}}, \code{\link{grDevices::svg}}
 #' @examples
@@ -150,7 +150,7 @@ dir.svg <- function(filename, path = '.', ...,append.date=T) dir.img(
 #' Any folders in the path that do not exist are created.
 #' @param filename The output file name.
 #' @param path The path to the output file.
-#' @param ... Additional arguments to postscript. 
+#' @param ... Additional arguments to \code{postscript}. 
 #' @param append.date Whether to write the output to a directory with today's date.
 #' @seealso \code{\link{dir.img}}, \code{\link{grDevices::postscript}}
 #' @examples
@@ -162,13 +162,37 @@ dir.eps <- function(filename,path='.',...,append.date=T) {
   dir.img(filename,postscript,'eps',path,...,append.date=append.date)
 }
 
+#' Accepts a numeric vector and writes a histogram in EPS format to a specified file.
+#' Allows for setting all values greater than a given quantile to the quantile value.
+#' Any folders in the path that do not exist are created.
+#' @param x A numeric vector.
+#' @param filename The output file name.
+#' @param breaks A \code{breaks} argument passed to \code{hist}.
+#' @param quant The maximum quantile to be plotted.
+#' @param path The path to the output file.
+#' @param ... Additional arguments to  \code{hist}.
+#' @param append.date Whether to write the output to a directory with today's date.
+#' @seealso \code{\link{dir.eps}}, \code{\link{hist}}
+#' @examples
+#' dir.hist(1:100,"example",path="path/to",quant=.9)
+#' plot(1:5,1:5)
+#' dev.off()
+dir.hist <- function(x, file, breaks='FD', quant=1, path='.', append.date=T, 
+		     col='gray28', border=F, main='', xlab='length (bp)', ...){
+	xmax <- quantile(x,quant)
+	x <- x[x<xmax]
+	dir.eps(file, path=path, append.date=append.date)
+	hist(x,breaks=breaks,..., border=border, col=col, main=main, xlab=xlab)
+	dev.off()
+}
+
 #' Concatenates a path, filename, and file extension into an output path, then writes a plot to the output path.
 #' Any folders in the path that do not exist are created.
 #' @param x A plot object.
 #' @param filename The output file name.
 #' @param path The path to the output file.
 #' @param ext The file extension.
-#' @param ... Additional arguments to ggplot2::ggsave.
+#' @param ... Additional arguments to \code{ggplot2::ggsave}.
 #' @param append.date Whether to write the output to a directory with today's date.
 #' @seealso \code{\link{dir.img}}, \code{\link{ggplot2::ggsave}}
 #' @examples
@@ -183,10 +207,10 @@ dir.gg <- function(x,filename,path='.',ext='pdf',...,append.date=T) {
   ggsave(filename,x,ext,...)
 }
 
-#' Wrapper for applying a write function to each element of list x and using names(x) as the filenames.
+#' Wrapper for applying a write function to each element of list \code{x} and using \code{names(x)} as the filenames.
 #' @param x A list.
-#' @param fn The function to be applied to each element of x.
-#' @param ... Additional arguments to fn.
+#' @param fn The function to be applied to each element of \code{x}.
+#' @param ... Additional arguments to \code{fn}.
 #' @return A list.
 #' @seealso \code{\link{dir.tab}}, \code{\link{base::lapply}}
 #' @examples
@@ -198,7 +222,7 @@ dir.apply <- function(x,path,fn=dir.tab,...) sapply(names(x),function(y) fn(x[[y
 #' @param dir The traget directory.
 #' @param fn The function to be applied to each directory name.
 #' @param pattern The regular expression matching desired files.
-#' @param ... Additional arguments to fn.
+#' @param ... Additional arguments to \code{fn}.
 #' @return A list.
 #' @seealso \code{\link{dir.img}}, \code{\link{base::list.files}}
 #' @examples

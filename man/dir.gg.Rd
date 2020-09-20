@@ -16,7 +16,7 @@ dir.gg(x, filename, path = ".", ext = "pdf", ..., append.date = T)
 
 \item{ext}{The file extension.}
 
-\item{...}{Additional arguments to ggplot2::ggsave.}
+\item{...}{Additional arguments to \code{ggplot2::ggsave}.}
 
 \item{append.date}{Whether to write the output to a directory with today's date.}
 }

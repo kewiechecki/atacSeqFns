@@ -2,7 +2,7 @@
 % Please edit documentation in R/dirfns.R
 \name{dir.out}
 \alias{dir.out}
-\title{Concatenates a path, filename, and file extension into an output path, then writes data x to the output path using function fn.
+\title{Concatenates a path, filename, and file extension into an output path, then writes data \code{x} to the output path using function \code{fn}.
 Any folders in the path that do not exist are created.}
 \usage{
 dir.out(x, fn, filename, ext = "txt", path = ".", ..., append.date = T)
@@ -18,15 +18,15 @@ dir.out(x, fn, filename, ext = "txt", path = ".", ..., append.date = T)
 
 \item{path}{The path to the output file.}
 
-\item{...}{Additional arguments to fn.}
+\item{...}{Additional arguments to \code{fn}.}
 
 \item{append.date}{Whether to write the output to a directory with today's date.}
 }
 \value{
-The resulting value of fn.
+The resulting value of \code{fn}.
 }
 \description{
-Concatenates a path, filename, and file extension into an output path, then writes data x to the output path using function fn.
+Concatenates a path, filename, and file extension into an output path, then writes data \code{x} to the output path using function \code{fn}.
 Any folders in the path that do not exist are created.
 }
 \examples{

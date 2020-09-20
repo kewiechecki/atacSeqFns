@@ -13,7 +13,7 @@ lrtab(dir, fn = read.table, pattern = NULL, ...)
 
 \item{pattern}{The regular expression matching desired files.}
 
-\item{...}{Additional arguments to fn.}
+\item{...}{Additional arguments to \code{fn}.}
 }
 \value{
 A list.

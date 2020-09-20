@@ -12,7 +12,7 @@ dir.pdf(filename, path = ".", ..., append.date = T)
 
 \item{path}{The path to the output file.}
 
-\item{...}{Additional arguments to pdf.}
+\item{...}{Additional arguments to \code{pdf}.}
 
 \item{append.date}{Whether to write the output to a directory with today's date.}
 }

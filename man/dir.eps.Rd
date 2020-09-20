@@ -12,7 +12,7 @@ dir.eps(filename, path = ".", ..., append.date = T)
 
 \item{path}{The path to the output file.}
 
-\item{...}{Additional arguments to postscript.}
+\item{...}{Additional arguments to \code{postscript}.}
 
 \item{append.date}{Whether to write the output to a directory with today's date.}
 }

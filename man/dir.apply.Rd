@@ -2,22 +2,22 @@
 % Please edit documentation in R/dirfns.R
 \name{dir.apply}
 \alias{dir.apply}
-\title{Wrapper for applying a write function to each element of list x and using names(x) as the filenames.}
+\title{Wrapper for applying a write function to each element of list \code{x} and using \code{names(x)} as the filenames.}
 \usage{
 dir.apply(x, path, fn = dir.tab, ...)
 }
 \arguments{
 \item{x}{A list.}
 
-\item{fn}{The function to be applied to each element of x.}
+\item{fn}{The function to be applied to each element of \code{x}.}
 
-\item{...}{Additional arguments to fn.}
+\item{...}{Additional arguments to \code{fn}.}
 }
 \value{
 A list.
 }
 \description{
-Wrapper for applying a write function to each element of list x and using names(x) as the filenames.
+Wrapper for applying a write function to each element of list \code{x} and using \code{names(x)} as the filenames.
 }
 \examples{
 x <- split(iris,iris$Species)

@@ -12,7 +12,7 @@ dir.png(filename, path = ".", ..., append.date = T)
 
 \item{path}{The path to the output file.}
 
-\item{...}{Additional arguments to png.}
+\item{...}{Additional arguments to \code{png}.}
 
 \item{append.date}{Whether to write the output to a directory with today's date.}
 

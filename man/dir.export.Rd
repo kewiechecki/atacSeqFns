@@ -2,26 +2,26 @@
 % Please edit documentation in R/dirfns.R
 \name{dir.export}
 \alias{dir.export}
-\title{Concatenates a path, filename, and file extension into an output path, then exports data x to the output path in a specified format.
+\title{Concatenates a path, filename, and file extension into an output path, then exports data \code{x} to the output path in a specified format.
 Any folders in the path that do not exist are created.}
 \usage{
 dir.export(x, filename, path = ".", format = "bed", ..., append.date = T)
 }
 \arguments{
-\item{x}{Data to be written to filename.}
+\item{x}{Data to be written to \code{filename}.}
 
 \item{filename}{The output file name.}
 
 \item{path}{The path to the output file.}
 
-\item{format}{An appropriate format for rtracklayer::export.}
+\item{format}{An appropriate format for \code{rtracklayer::export}.}
 
-\item{...}{Additional arguments to rtracklayer::export.}
+\item{...}{Additional arguments to \code{rtracklayer::export}.}
 
 \item{append.date}{Whether to write the output to a directory with today's date.}
 }
 \description{
-Concatenates a path, filename, and file extension into an output path, then exports data x to the output path in a specified format.
+Concatenates a path, filename, and file extension into an output path, then exports data \code{x} to the output path in a specified format.
 Any folders in the path that do not exist are created.
 }
 \seealso{
