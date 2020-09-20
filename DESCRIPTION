@@ -1,0 +1,26 @@
+Package: atacSeqFns
+Title: Utility functions for working with ATAC-seq peaks.
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Keira",
+           family = "Wiechecki",
+           role = c("aut", "cre"),
+           email = "kaw504@nyu.edu",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: A collection of functions to perform tasks of interest on ATAC-seq peaks and other data that can be expressed as GRanges objects. The pipeline is intended to find overlaps between peaks and genomic features, find TF motifs present in each peak, and test for enrichment of motifs in a subset of peaks. It also included functions to cleanly organize output files by specifying directories separately and automatically organizing output by date.
+License: `use_gpl3_license()`
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Depends: 
+    DBI,
+    GenomicFeatures,
+    GenomicRanges,
+    motifmatchr,
+    rtracklayer,
+    TFBSTools,
+    R (>= 2.10)
+Imports: DBI, GenomicFeatures, GenomicRanges, motifmatchr, rtracklayer, TFBSTools
+Recommends: ggplot2
+release_date: 2020
