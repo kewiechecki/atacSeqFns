@@ -2,24 +2,25 @@
 % Please edit documentation in R/getMatches.R
 \name{matchPois}
 \alias{matchPois}
-\title{Accepts a PWMatrixList and an output from motifmatchr::matchMotifs, and removes rows from the output corresponding to duplicate motif IDs.
-Only the row with the greatest number of matches is left for each motif ID.
-The background frequency is obtained from the total nucleotide frequencies in peaks.}
+\title{Accepts a vector of peak IDs, and performs a Poisson test for enrichmet of motifs in \code{peaks} versus a background of all elements in \code{matches}.}
 \usage{
 matchPois(peaks, matches, padj.method = "fdr", allow.duplicates = F)
 }
 \arguments{
+\item{peaks}{A character vector of peak IDs corresponding to the \code{row.names} of \code{matches}.}
+
 \item{matches}{An output from motifmatchr::matchMotifs.}
 
-\item{motifs}{The PWMatrixList used to compute matches.}
+\item{padj.method}{The method to be used by \code{p.adjust()}.}
 
-\item{out}{Type of output to return.}
+\item{allow.duplicates}{Whether to remove duplicates from \code{peaks}.}
+}
+\value{
+A \code{data.frame} containing the test results.
 }
 \description{
-Accepts a PWMatrixList and an output from motifmatchr::matchMotifs, and removes rows from the output corresponding to duplicate motif IDs.
-Only the row with the greatest number of matches is left for each motif ID.
-The background frequency is obtained from the total nucleotide frequencies in peaks.
+Accepts a vector of peak IDs, and performs a Poisson test for enrichmet of motifs in \code{peaks} versus a background of all elements in \code{matches}.
 }
 \seealso{
-\code{\link{getMatches}}, \code{link{motifmatchr::matchMotifs}}
+\code{\link{getMatches}}, \code{\link{motifmatchr::matchMotifs}}
 }

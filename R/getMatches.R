@@ -1,16 +1,15 @@
 #' Searches a given set of genomic ranges for the motifs returned by mergeMotifs.
 #' The background frequency is obtained from the total nucleotide frequencies in peaks.
+#'
 #' @param peaks A GenomicRanges or other subject input for matchMotifs.
 #' @param genome A BSgenome object or other genome input for matchMotifs.
 #' @param out Type of output to return.
 #' @param motifs A PWMatrixList.
-#' @seealso \code{\link{mergeMotifs}}, \code{link{motifmatchr::matchMotifs}}
-getMatches <- function(peaks,genome,out="matches",motifs=CrobustaMotifs){
-
-	#         require(TFBSTools)
-	#         require(motifmatchr)
-	#         require(DBI)
-
+#' @param ... Additional arguments to \code{matchMotifs()}
+#' @return A \code{matches} object.
+#' @seealso \code{\link{mergeMotifs}}, \code{\link{motifmatchr::matchMotifs}}
+#' @export
+getMatches <- function(peaks,genome,out="matches",motifs=CrobustaMotifs,...){
 	# get NT background freq from accessome
 	bg <- letterFrequency(Views(genome,peaks),c("A","C","G","T"))
 	bg <- apply(bg,2,sum)
@@ -19,7 +18,7 @@ getMatches <- function(peaks,genome,out="matches",motifs=CrobustaMotifs){
 	#         motifs <- mergeMotifs()
 
 	# match motifs to peaks
-	matches <- matchMotifs(motifs,peaks,genome,bg=bg,out=out)
+	matches <- matchMotifs(motifs,peaks,genome,bg=bg,out=out,...)
 	row.names(matches) <- rowData(matches)$name
 	rowData(matches)$width <- width(peaks)
 	return(rmdup(motifs,matches,out))
@@ -28,10 +27,13 @@ getMatches <- function(peaks,genome,out="matches",motifs=CrobustaMotifs){
 #' Accepts a PWMatrixList and an output from motifmatchr::matchMotifs, and removes rows from the output corresponding to duplicate motif IDs.
 #' Only the row with the greatest number of matches is left for each motif ID.
 #' The background frequency is obtained from the total nucleotide frequencies in peaks.
+#'
 #' @param motifs The PWMatrixList used to compute matches.
 #' @param matches An output from motifmatchr::matchMotifs.
 #' @param out Type of output to return.
-#' @seealso \code{\link{getMatches}}, \code{link{motifmatchr::matchMotifs}}
+#' @return A \code{matches} object.
+#' @seealso \code{\link{getMatches}}, \code{\link{motifmatchr::matchMotifs}}
+#' @export
 rmdup <- function(motifs,matches,metric='matches'){
 	# split motif matches by TF
 	sel <- split(names(motifs),ID(motifs))
@@ -51,13 +53,15 @@ rmdup <- function(motifs,matches,metric='matches'){
 	return(bestmatch)
 }
 
-#' Accepts a PWMatrixList and an output from motifmatchr::matchMotifs, and removes rows from the output corresponding to duplicate motif IDs.
-#' Only the row with the greatest number of matches is left for each motif ID.
-#' The background frequency is obtained from the total nucleotide frequencies in peaks.
-#' @param motifs The PWMatrixList used to compute matches.
+#' Accepts a vector of peak IDs, and performs a Poisson test for enrichmet of motifs in \code{peaks} versus a background of all elements in \code{matches}.
+#'
+#' @param peaks A character vector of peak IDs corresponding to the \code{row.names} of \code{matches}.
 #' @param matches An output from motifmatchr::matchMotifs.
-#' @param out Type of output to return.
-#' @seealso \code{\link{getMatches}}, \code{link{motifmatchr::matchMotifs}}
+#' @param padj.method The method to be used by \code{p.adjust()}.
+#' @param allow.duplicates Whether to remove duplicates from \code{peaks}.
+#' @return A \code{data.frame} containing the test results.
+#' @seealso \code{\link{getMatches}}, \code{\link{motifmatchr::matchMotifs}}
+#' @export
 matchPois <- function(peaks,matches,padj.method='fdr',allow.duplicates=F){
 	if(!allow.duplicates) peaks <- unique(peaks)
 	ct <- motifCounts(matches)
@@ -81,3 +85,20 @@ matchPois <- function(peaks,matches,padj.method='fdr',allow.duplicates=F){
 		padj=padj
 	))
 }
+
+#' Determines a matrix of potential regulatory TFs.
+#'
+#' @param geneToPeak A 2-column matrix with the first row corresponding to the \code{row.names} of \code{matches} and the second giving the Gene ID.
+#' @param matches An output from \code{matchMotifs}.
+#' @return A logical matrix with columns corresponding to the motifs in \code{matches} and rows corresponding to the genes in \code{geneToPeak}.
+#' @seealso \code{\link{getOverlaps}}, \code{\link{matchMotifs}}
+#' @export
+regMat <- function(geneToPeak,matches){
+	mat <- as.matrix(motifMatches(matches))
+	geneID <- split(geneToPeak[,1],geneToPeak[,2])
+	genemat <- lapply(geneID,function(x) mat[x,,drop=F])
+	res <- t(sapply(genemat, function(x) as.numeric(apply(x,2,any))))
+	colnames(res) <- colnames(matches)
+	return(res)
+}
+

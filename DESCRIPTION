@@ -1,6 +1,6 @@
 Package: atacSeqFns
 Title: Utility functions for working with ATAC-seq peaks.
-Version: 0.0.0.9000
+Version: 0.0.0.9002
 Authors@R: 
     person(given = "Keira",
            family = "Wiechecki",
@@ -14,13 +14,25 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends: 
+    circlize,
+    ComplexHeatmap,
     DBI,
     GenomicFeatures,
     GenomicRanges,
     motifmatchr,
     rtracklayer,
+    SummarizedExperiment,
     TFBSTools,
     R (>= 2.10)
-Imports: DBI, GenomicFeatures, GenomicRanges, motifmatchr, rtracklayer, TFBSTools
+Imports:
+    circlize,
+    ComplexHeatmap,
+    DBI,
+    GenomicFeatures,
+    GenomicRanges,
+    motifmatchr,
+    rtracklayer,
+    SummarizedExperiment,
+    TFBSTools
 Recommends: ggplot2
 release_date: 2020

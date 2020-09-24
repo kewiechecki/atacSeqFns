@@ -15,11 +15,14 @@ rmdup(motifs, matches, metric = "matches")
 
 \item{out}{Type of output to return.}
 }
+\value{
+A \code{matches} object.
+}
 \description{
 Accepts a PWMatrixList and an output from motifmatchr::matchMotifs, and removes rows from the output corresponding to duplicate motif IDs.
 Only the row with the greatest number of matches is left for each motif ID.
 The background frequency is obtained from the total nucleotide frequencies in peaks.
 }
 \seealso{
-\code{\link{getMatches}}, \code{link{motifmatchr::matchMotifs}}
+\code{\link{getMatches}}, \code{\link{motifmatchr::matchMotifs}}
 }

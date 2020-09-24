@@ -1,3 +1,15 @@
+#' Parses a genome file in GFF format into a list of \code{GRangesList}s organized by gene and genomic feature.
+#' Parsed genomic features are exported in BED format using \code{dir.export}.
+#'
+#' @param gff Path to a genome file in GFF format.
+#' @param prefix Prefix to append to gene IDs.
+#' @param tssflank Numeric vector of length 2 giving the window in bp upstream and downstream of the TSS to use as the promoter.
+#' @param tsswindow How many bp upstream of the promoter to consider as upstream of a gene.
+#' @param ttswindow How many bp downstream of the TTS to consider as downstream of a gene.
+#' @param ... Additional arguments to \code{dir.export()}
+#' @return 
+#' @seealso \code{\link{mergeMotifs}}, \code{\link{motifmatchr::matchMotifs}}
+#' @export
 getFeatures <- function(
 # accepts a GFF file name
 # returns a list of GRangesLists corresponding to genomic features
@@ -8,10 +20,6 @@ getFeatures <- function(
   ttswindow=10000, # bp width downstream of TTS
   ...
 ){
-  # library for working with bed files
-	#   require(GenomicRanges)
-  # library for extracting genomic features from GFF
-	#   require(GenomicFeatures)
   # read data
   gff <- import(gff)
   # add fields for output as bed files
@@ -28,29 +36,17 @@ getFeatures <- function(
   )
   names(res) <- c('five_prime_UTR','CDS','three_prime_UTR')
 
-  # write output
-  #   lapply(names(res), function(x) dir.export(res[[x]],x,...))
-
   # extract all features for each transcript
   gene <- gff[mcols(gff)$type%in%c("CDS",'five_prime_UTR','three_prime_UTR')]
-  gene <- split(gene,unlist(mcols(gene)$Parent))
+  gene <- S4Vectors::split(gene,unlist(mcols(gene)$Parent))
   genebody <- unlist(range(gene))
-  #   fn <- function(x) {
-  #         gaps(x,min(start(x)),max(end(x)))
-  #   }
-  #   gaps(reduce(gene[1:1000]),start(genebody)[1:1000],end(genebody)[1:1000])
-  #   intron <- mapply(gaps,gene,start(genebody),end(genebody),SIMPLIFY=F)
 
   downstream <- flank(genebody,ttswindow,start=F)
-  #   start(downstream)[start(downstream)<1] <- 1
-
-  #   res <- lapply(res,function(x) split(x,unlist(mcols(x)$Parent)))
 
   txdb <- makeTxDbFromGRanges(gff)
   
   introns <- unlist(intronsByTranscript(txdb,T))
   names(introns) <- paste0(prefix,names(introns))
-  #   names(introns) <- sub('\\.v.*','',names(introns))
   
   tss <- promoters(genebody,tssflank[1],tssflank[2])
 
@@ -60,16 +56,17 @@ getFeatures <- function(
   res2 <- append(res2,res)
   lapply(names(res2), function(x) dir.export(res2[[x]],x,...))
 
-  #   res2 <- lapply(res2, function(x) setNames(x,sub('\\.v.*','',names(x))))
-  res2 <- lapply(res2, function(x) split(x,sub('\\.v.*','',names(x))))
-
-  #   res <- lapply(res, function(x) setNames(x,sub('\\.v.*','',names(x))))
+  res2 <- lapply(res2, function(x) S4Vectors::split(x,sub('\\.v.*','',names(x))))
 
   return(res2)
 }
 
-# finds all overlaps between a set of genomic features and a set of peaks
-# then returns a table o gene-to-peak associations
+#' Finds all overlaps between one of the genomic features returned by\code{getFeatures()} and a set of peaks, then returns a table of gene-to-peak associations.
+#'
+#' @param feat One of the \code{GRangesList}s returned by \code{getFeatures()}
+#' @param peaks A \code{GRanges} object from the same genome as \code{feat}.
+#' @return A \code{data.frame} of gene-to-peak mappings.
+#' @export
 getOverlaps <- function(feat,peaks){
 	tmp <- findOverlaps(peaks,feat)
 	res <- data.frame(
@@ -78,5 +75,20 @@ getOverlaps <- function(feat,peaks){
 		stringsAsFactors=F
 	)
 	res <- res[!duplicated(res),]
+	return(res)
+}
+
+#' Converts gene-peak table to a logical matrix of associations
+#' 
+#' @param overlaps A two-column matrix with peak IDs in the first column and gene IDs in the second column. It is intended to be used with the output of \code{getOverlaps}.
+#' @return A logical matrix of gene-peak associations with genes as columns and peaks as rows.
+#' @seealso \code{\link{getOverlaps}}
+#' @export
+getOverlapMat <- function(overlaps){
+	peakid <- as.factor(overlaps[,1])
+	geneid <- as.factor(overlaps[,2])
+	peaks <- split(peakid,geneid)
+	res <- sapply(peakid,function(x) sapply(peaks,function(y) x%in%y))
+	colnames(res) <- names(peaks)
 	return(res)
 }
